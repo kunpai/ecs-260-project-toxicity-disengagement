@@ -9,6 +9,7 @@ sys.path.append('..')
 from toxicity_detector.toxicity_detector import classify_sentence
 from toxicity_detector.toxicity_detector import nltk_classify_sentence
 load_dotenv()
+
 def extract_pull_requests_and_comments(repository_url, output_file, github_token):
     # Create a Github instance
     g = Github(github_token)
@@ -31,14 +32,9 @@ def extract_pull_requests_and_comments(repository_url, output_file, github_token
 
                 # Check if the user already exists before adding a new entry
                 user_exists = False
-                for user in pr.user.login:
-                    user_exists = True
-                    comment = pr.body if pr.body is not None else "There is no body for this pull request."
-                    csv_writer.writerow(['', '', '', '', '', '', '', user, comment, pr.created_at, classify_sentence(comment), nltk_classify_sentence(comment)])
+                comment = pr.body if pr.body is not None else "There is no body for this pull request."
 
-                if not user_exists:
-                    comment = pr.body if pr.body is not None else "There is no body for this pull request."
-                    csv_writer.writerow(['', '', '', '', '', '', '', pr.user.login, comment, pr.created_at, classify_sentence(comment), nltk_classify_sentence(comment)])
+                csv_writer.writerow(['', '', '', '', '', '', '', pr.user.login, comment, pr.created_at, classify_sentence(comment), nltk_classify_sentence(comment)])
 
                 # Write comments information to CSV
                 for comment in pr.get_review_comments():
@@ -51,7 +47,7 @@ def extract_pull_requests_and_comments(repository_url, output_file, github_token
 
 if __name__ == "__main__":
     # Replace 'username/repo' with the actual repository path
-    repository_url = 'iluwatar/java-design-patterns'
+    repository_url = 'helloparthshah/StadiaWireless'
 
     # Specify the output file
     output_file = 'output_' + repository_url.replace("/", "_") + '.csv'
