@@ -17,5 +17,5 @@ To use the GitHub API, you need to create a personal access token. You can creat
 Once you have created the token, you can store it in a file called `.env` in the specific directories of the repository. The file should contain the following line:
 
 ```bash
-GITHUB_API_TOKEN='<your_token_here>'
+GITHUB_TOKEN='<your_token_here>'
 ```
