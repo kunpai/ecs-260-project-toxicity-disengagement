@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# API file for moderation
+API.txt
+
 # Our folder for clones of projects
 clones/
 
