@@ -1,6 +1,5 @@
 from pydriller import Repository
 import csv
-import math
 csv.field_size_limit(1000000)
 
 

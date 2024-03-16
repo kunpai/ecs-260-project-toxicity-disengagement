@@ -1,8 +1,6 @@
 import argparse
-import json
 import os
 import sys
-import shutil
 import csv
 from sloc_adder import sloc
 from sorter import sorter
