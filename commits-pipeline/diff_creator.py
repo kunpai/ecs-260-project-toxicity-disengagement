@@ -1,11 +1,17 @@
 import csv
 from datetime import datetime
 
-
-csv.field_size_limit(1000000)
-
-
 def create_diff_column(csv_file_path):
+    """
+    Adds a new column 'Time Difference' to a CSV file containing commit data,
+    representing the time difference between consecutive commits for each developer.
+
+    Args:
+        csv_file_path (str): The file path to the CSV file containing commit data.
+
+    Returns:
+        None
+    """
     # open a csv file in read mode
     with open(csv_file_path, 'r') as csvfile:
         # read existing content
@@ -22,7 +28,6 @@ def create_diff_column(csv_file_path):
     # for every row, calculate the difference between the current row's timestamp and the next row's timestamp and insert it as a new column
     # only do it if the developer name is the same
     for i in range(len(rows) - 1):
-        print(i)
         current_row = rows[i]
         next_row = rows[i + 1]
         current_developer = current_row[0]
@@ -40,13 +45,13 @@ def create_diff_column(csv_file_path):
         rows[i] = current_row
 
     # write the updated rows to the new file
-
     rows.insert(0, header)
 
-    with open(csv_file_path.replace('.csv', '.csv'), 'w', newline='') as csvfile:
+    with open(csv_file_path.replace('.csv', '.csv'), 'w', newline='') as csvfile: # write to the same file
         writer = csv.writer(csvfile)
         writer.writerows(rows)
 
 
 if __name__ == '__main__':
+    # Replace 'gem5_gem5_commits.csv' with the path to your CSV file
     create_diff_column('gem5_gem5_commits.csv')

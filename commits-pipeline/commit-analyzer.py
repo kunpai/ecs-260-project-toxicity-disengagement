@@ -10,13 +10,33 @@ from pydriller import Repository
 from toxicity_detector.toxicity_detector import classify_sentence, nltk_classify_sentence
 
 def ensure_directory_exists(directory):
+    """
+    Ensure that a directory exists; if not, create it.
+
+    Args:
+        directory (str): Path to the directory.
+    """
     if not os.path.exists(directory):
         os.makedirs(directory)
 
 def clone_repository(remote_url, local_path):
+    """
+    Clone a remote Git repository.
+
+    Args:
+        remote_url (str): URL of the remote Git repository.
+        local_path (str): Local path where the repository will be cloned.
+    """
     os.system(f"git clone {remote_url} {local_path}")
 
 def generate_commits_csv(repository_path, csv_file_path):
+    """
+    Generate a CSV containing commit information from a Git repository.
+
+    Args:
+        repository_path (str): Path to the local Git repository.
+        csv_file_path (str): Path to the output CSV file.
+    """
     with open(csv_file_path, 'w', newline='') as csvfile:
         fieldnames = ['Commit SHA', 'Developer', 'Message', 'Timestamp', 'Sentiment', 'NLTK_Sentiment', 'NLTK_Positive_Sentiment', 'NLTK_Negative_Sentiment', 'NLTK_Neutral_Sentiment', 'NLTK_Compound_Sentiment', 'Toxic', 'Severe_toxic', 'Obscene', 'Threat', 'Insult', 'Identity_hate', 'Day_of_week', 'Time_of_day', 'Pull_Request', 'Type', 'Previous_Positive_Sentiment', 'Previous_Negative_Sentiment', 'Previous_Neutral_Sentiment', 'Previous_Compound_Sentiment', 'Previous_Toxic', 'Previous_Severe_toxic', 'Previous_Obscene', 'Previous_Threat', 'Previous_Insult', 'Previous_Identity_hate', 'Previous_Commit']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -127,6 +147,15 @@ def generate_commits_csv(repository_path, csv_file_path):
             prev_commit_timestamp = commit.author_date
 
 def main(repository_url):
+    """
+    Main function to generate a CSV containing commit information from a Git repository.
+
+    Args:
+        repository_url (str): URL of the Git repository.
+
+    Returns:
+        tuple: Path to the local Git repository and path to the output CSV file.
+    """
     local_directory = "clones"
     repo_name = repository_url.split("/")[-1].replace(".git", "")
     repository_path = os.path.join(local_directory, repo_name)

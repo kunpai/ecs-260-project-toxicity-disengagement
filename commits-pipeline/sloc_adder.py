@@ -5,7 +5,14 @@ csv.field_size_limit(1000000)
 
 def sloc(repository, csv_file):
     """
-    Given a repository and a commit, return the number of lines of code in the repository at that commit.
+    Calculate the Source Lines of Code (SLOC) for each commit in a repository and add the information to a CSV file.
+
+    Parameters:
+        repository (str): The path or URL of the repository to analyze.
+        csv_file (str): The file path of the CSV file containing commit information.
+
+    Returns:
+        None
     """
 
     commits_info = {}  # Dictionary to store commit hash and corresponding SLOC
