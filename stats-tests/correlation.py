@@ -41,7 +41,7 @@ def create_p_value(df, columns_subset=None):
 def main():
     parser = argparse.ArgumentParser(description='Calculate correlation matrix and p-value for specified columns.')
     parser.add_argument('input_file', type=str, help='Path to the input CSV file')
-    parser.add_argument('--columns_subset', nargs='+', help='Subset of columns to use in correlation analysis')
+    parser.add_argument('--columns_subset', nargs='+', help='Subset of columns to use in correlation analysis', default=None)
 
     args = parser.parse_args()
 
@@ -51,12 +51,18 @@ def main():
     print('Correlation Matrix:')
     print(correlation_matrix)
 
-    if 'Toxic' in args.columns_subset and 'Time Difference' in args.columns_subset:
-        p_value = create_p_value(df, columns_subset=args.columns_subset)
-        print('\nP-value:')
-        print(p_value)
+    # write to file
 
-        print('\nNull hypothesis: There is no significant difference between the means of the two columns')
+    with open('correlation_matrix.csv', 'w') as f:
+        f.write(correlation_matrix.to_csv())
+
+    if args.columns_subset:
+        if 'Toxic' in args.columns_subset and 'Time Difference' in args.columns_subset:
+            p_value = create_p_value(df, columns_subset=args.columns_subset)
+            print('\nP-value:')
+            print(p_value)
+
+            print('\nNull hypothesis: There is no significant difference between the means of the two columns')
 
 if __name__ == '__main__':
     main()

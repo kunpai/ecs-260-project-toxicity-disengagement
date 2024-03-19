@@ -52,8 +52,10 @@ def regression_analysis_disengagement_2(df, category):
     plt.plot(df.index, y, label='Actual')
     plt.plot(df.index, y_pred, label='Predicted')
     plt.xlabel('Year', fontsize=14)
+    # format x-axis as year not decimal
+    plt.gca().xaxis.set_major_locator(plt.MaxNLocator(integer=True))
     plt.ylabel('Number of Unique Developers', fontsize=14)
-    plt.title('Actual vs. Predicted Number of Unique Developers for ' + category, fontsize=16)
+    plt.title('Actual vs. Predicted Number of Unique Developers for ' + category, fontsize=14)
     plt.legend()
     plt.show()
 
